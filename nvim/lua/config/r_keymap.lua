@@ -111,14 +111,26 @@ local check_r_package = function()
   send_to_terminal({ "Rcheck" }) 
 end
 
+local build_r_package_doc = function()
+  send_to_console({ "devtools::document()" })
+end
+
+local install_r_package = function()
+  build_r_package_doc()
+  send_to_console({ "devtools::install()" })
+end
+
 vim.keymap.set("n", "<cr>", SendRTextObject, { noremap = true, expr = true, desc = "Execute Text Object" })
 vim.keymap.set("n", "<cr><cr>", send_r_line, { noremap = true, expr = false, desc = "Execute R line" })
 vim.keymap.set("v", "<cr>", send_r_region, { noremap = true, expr = false, desc = "Execute R Region"})
 vim.keymap.set("n", "<bs>l", reload_r_package, { noremap = true, expr = false, desc = "Reload R package" })
 vim.keymap.set("n", "<bs>r", restart_r, { noremap = true, expr = false, desc = "Restart R session" })
 vim.keymap.set("n", "<bs>t", test_r_package, { noremap = true, expr = false, desc = "Test R Package" })
+vim.keymap.set("n", "<bs>d", build_r_package_doc, { noremap = true, expr = false, desc = "Build R Package Documentation" })
+vim.keymap.set("n", "<bs>i", install_r_package, { noremap = true, expr = false, desc = "Install R Package" })
 vim.keymap.set("n", "<bs>e", check_r_package, { noremap = true, expr = false, desc = "Check R Package" })
 vim.keymap.set("n", "<bs>s", source_r_file, { noremap = true, expr = false, desc = "Source R file"})
 vim.keymap.set("n", "<bs>?", get_r_help, { noremap = true, expr = false, desc = "Get R Help"})
 
-vim.keymap.set("n", "<leader>ek", "e ~/repos/dotfiles/nvim/lua/config/r_keymap.lua<cr>", { noremap = true, expr = false, desc = "Edit Keymaps"})
+
+vim.keymap.set("n", "<leader>ek", "<C-w>v:e ~/repos/dotfiles/nvim/lua/config/r_keymap.lua<cr>", { noremap = true, expr = false, desc = "Edit Keymaps"})
