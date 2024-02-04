@@ -5,6 +5,7 @@ local tmux_sk = function(cmds, session, window, pane)
   for _, cmd in ipairs(cmds) do
     cmd = string.gsub(cmd, '"', '\\"')
     cmd = string.gsub(cmd, "%$", [[\$]])
+    cmd = string.gsub(cmd, "`", '\\`')
     local call = 'tmux send-keys -t ' .. where .. ' "' .. cmd .. '" ENTER'
     vim.fn.system(call)
   end
