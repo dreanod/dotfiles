@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+export EDITOR=nvim
+
+alias goconfig="cd ~/.config/; nvim ."
+
+alias gopackage="~/Projects/actuarial-recipes-package/.session.tmux"
+alias gopackage_vim="cd ~/Projects/actuarial-recipes-package/; nvim . -S ~/Projects/actuarial-recipes-package/.nvim.lua"
+
+alias goblog="~/Projects/actuarial-recipes-blog/.tmux.conf"
+alias goblog_nvim="cd ~/Projects/actuarial-recipes/; nvim ."
+
+alias resource="source ~/.zshrc"
+
+alias r="R --no-save"
+alias R="R --no-save"
+alias Rtest="Rscript -e 'devtools::test()'"
+alias Rcheck="R CMD check ."
+
+alias vi="nvim"
+alias vim="nvim"
