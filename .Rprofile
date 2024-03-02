@@ -17,7 +17,9 @@ options(
   usethis.overwrite = TRUE,
   repos = c(CRAN = "https://stat.ethz.ch/CRAN/"),
 
-  tibble.width = Inf
+  tibble.width = Inf,
+
+  width = 140
 )
 
 setHook("rstudio.sessionInit", function(newSession) {
