@@ -15,24 +15,11 @@ options(
   ),
   usethis.destdir = "~",
   usethis.overwrite = TRUE,
-  repos = c(CRAN = "https://stat.ethz.ch/CRAN/")
+  repos = c(CRAN = "https://stat.ethz.ch/CRAN/"),
 
-  # languageserver.server_capabilities = list(
-  #   completionProvider = FALSE,
-  #   completionItemResolve = FALSE
+  tibble.width = Inf
 )
 
 setHook("rstudio.sessionInit", function(newSession) {
   options(shiny.launch.browser = .rs.invokeShinyWindowExternal)
-  # options(shiny.launch.browser = .rs.invokeShinyPaneViewer)
 }, action = "append")
-
-# utils::assignInNamespace(
-#   "q", 
-#   function(save = "no", status = 0, runLast = TRUE) 
-#   {
-#     .Internal(quit(save, status, runLast))
-#   }, 
-#   "base"
-# )
-#
