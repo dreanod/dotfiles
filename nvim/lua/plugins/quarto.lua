@@ -78,6 +78,15 @@ return {
           },
         },
         textobjects = {
+          swap = {
+            enable = true,
+            swap_next = {
+              ["<leader>a"] = "@parameter.inner",
+            },
+            swap_previous = {
+              ["<leader>A"] = "@parameter.inner",
+            },
+          },
           select = {
             enable = true,
             lookahead = true,
@@ -151,7 +160,7 @@ return {
         buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
         local opts = { noremap = true, silent = true }
 
-        buf_set_keymap("n", "gS", "<cmd>Telescope lsp_document_symbols<CR>", opts)
+        -- buf_set_keymap("n", "gS", "<cmd>Telescope lsp_document_symbols<CR>", opts)
         buf_set_keymap("n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", opts)
         buf_set_keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
         buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
