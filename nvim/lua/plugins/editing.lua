@@ -31,6 +31,8 @@ return {
 		"windwp/nvim-autopairs",
 		config = function()
 			require("nvim-autopairs").setup({})
+      require("nvim-autopairs").get_rules("'")[1].not_filetypes = {"r" }
+      require("nvim-autopairs").get_rules("`")[1].not_filetypes = {"rmarkdown", "quarto" }
 			-- require("nvim-autopairs").remove_rule("`")
 		end,
 	},

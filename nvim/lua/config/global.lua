@@ -95,3 +95,8 @@ vim.o.completeopt = 'menuone,noselect,preview,noinsert'
 -- relative numbers except for current line
 vim.wo.number = true
 vim.wo.relativenumber = true
+
+P = function(v)
+  print(vim.inspect(v))
+  return v
+end
