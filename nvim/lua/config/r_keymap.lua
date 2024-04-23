@@ -91,18 +91,35 @@ function SendRTextObject(motion)
   end
 end
 
-local function starts_with_hash_dollar(str)
-    return string.sub(str, 1, 2) == "#$"
+local function remove_roxy_comment(str)
+  local new_str = str:gsub("^#\' *", "")
+  return new_str
 end
 
-local function remove_starting_hash_dollar(str)
-  local new_str = str:gsub("^#%$ *", "")
-  return new_str
+local filter_test_r_cmds = function(cmds)
+  local filtered = {}
+  local capture = false
+  for _, line in ipairs(cmds) do
+    P(line)
+    if string.match(line, "^#\' *@tests") then
+      P("in 1")
+      capture = true
+    elseif string.match(line, "^#\' @") then
+      P("in 2")
+      capture = false
+    elseif string.match(line, "^#\'") and (capture == true) then
+      P("in 3")
+      table.insert(filtered, P(string.gsub(line, "^#\'", "")))
+    else
+      capture = false
+    end
+  end
+  return filtered
 end
 
 local send_r_comment_line = function()
   local cmd = vim.api.nvim_get_current_line()
-  send_to_console({ remove_starting_hash_dollar(cmd) })
+  send_to_console({ remove_roxy_comment(cmd) })
 end
 
 function SendCommentedRTextObject(motion)
@@ -120,11 +137,7 @@ function SendCommentedRTextObject(motion)
 
   if motion == "line" then
     local cmds = get_text_object_line()
-    for _, cmd in ipairs(cmds) do
-      if starts_with_hash_dollar(cmd) then
-        send_to_console({ remove_starting_hash_dollar(cmd) })
-      end
-    end
+    send_to_console(P(filter_test_r_cmds(cmds)))
     vim.cmd("normal `z")
   end
 end
@@ -273,7 +286,7 @@ vim.keymap.set("n", "<bs>q", render_quarto, { noremap = true, expr = false, desc
 
 vim.keymap.set("n", "<leader>ek", "<C-w>s:e ~/repos/dotfiles/nvim/lua/config/r_keymap.lua<cr>", { noremap = true, expr = false, desc = "Edit Keymaps"})
 
-  vim.keymap.set("n", "<S-CR>", SendCommentedRTextObject, { noremap = true, expr = true, desc = "Send R Commented Line"})
+vim.keymap.set("n", "<S-CR>", SendCommentedRTextObject, { noremap = true, expr = true, desc = "Send R Commented Line"})
 vim.keymap.set("n", "<S-CR><S-CR>", send_r_comment_line, { noremap = true, expr = false, desc = "Send R Commented Line"})
 
 vim.keymap.set("n", "<bs>w", test_local_R, { noremap = true, expr = false, desc = "Test Current R File"})
