@@ -1,3 +1,6 @@
 return {
-  {'dreanod/rtests.nvim'}
+  {
+    'dreanod/rtests.nvim',
+    dir = "~/repos/rtests.nvim"
+  }
 }

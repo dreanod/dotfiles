@@ -160,7 +160,7 @@ return {
         buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
         local opts = { noremap = true, silent = true }
 
-        -- buf_set_keymap("n", "gS", "<cmd>Telescope lsp_document_symbols<CR>", opts)
+        buf_set_keymap("n", "gS", "<cmd>Telescope lsp_document_symbols<CR>", opts)
         buf_set_keymap("n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", opts)
         buf_set_keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
         buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
@@ -621,14 +621,21 @@ return {
         },
       })
 
-      -- for friendly snippets
-      require("luasnip.loaders.from_vscode").lazy_load()
-      -- for custom snippets
-      require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath("config") .. "/snips" } })
+      require("luasnip.loaders.from_lua").lazy_load({
+        paths = {
+          vim.fn.stdpath("config") .. "/snippets",
+          "~/snippets"
+        },
+        fs_event_providers = {
+          libuv = true,
+          autocmd = true
+        }
+      })
       -- link quarto and rmarkdown to markdown snippets
       luasnip.filetype_extend("quarto", { "markdown" })
       luasnip.filetype_extend("rmarkdown", { "markdown" })
-    end,
+    end
+  ,
   },
 
   -- send code from python/r/qmd documets to a terminal or REPL
