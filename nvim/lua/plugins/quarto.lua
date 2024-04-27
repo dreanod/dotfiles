@@ -623,8 +623,7 @@ return {
 
       require("luasnip.loaders.from_lua").lazy_load({
         paths = {
-          vim.fn.stdpath("config") .. "/snippets",
-          "~/snippets"
+          vim.fn.stdpath("config") .. "/snippets"
         },
         fs_event_providers = {
           libuv = true,
